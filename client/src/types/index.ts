@@ -12,27 +12,17 @@ export interface AuthSession {
   accessToken: string;
 }
 
-// ─── Client ───────────────────────────────────────────────────────────────────
-export interface Client {
+// ─── Website ──────────────────────────────────────────────────────────────────
+export interface Website {
   id: string;
   name: string;
-  email: string;
-  role: "client";
-  is_active: boolean;
+  website_url: string;
+  user_id: string;
+  theme_id?: string;
+  theme?: Theme;
+  components?: Component[];
   created_at: string;
   updated_at: string;
-}
-
-export interface CreateClientPayload {
-  name: string;
-  email: string;
-  password: string;
-}
-
-export interface UpdateClientPayload {
-  name?: string;
-  email?: string;
-  is_active?: boolean;
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -44,20 +34,6 @@ export interface Component {
   position: number;
   created_at: string;
   updated_at: string;
-}
-
-export interface CreateComponentPayload {
-  name: string;
-  type: string;
-  description: string;
-  position: number;
-}
-
-export interface UpdateComponentPayload {
-  name?: string;
-  type?: string;
-  description?: string;
-  position?: number;
 }
 
 // ─── Theme ────────────────────────────────────────────────────────────────────
@@ -78,28 +54,18 @@ export interface ThemeColors {
   text: string;
 }
 
-export interface CreateThemePayload {
-  name: string;
-  colors: ThemeColors;
-}
-
-export interface UpdateThemePayload {
-  name?: string;
-  colors?: Partial<ThemeColors>;
-}
-
 // ─── Form Response ────────────────────────────────────────────────────────────
 export interface FormResponse {
   id: string;
-  website_id: string;
-  component_id: string;
-  patient_id: string;
+  website_id?: string;
+  component_id?: string;
+  patient_id?: string;
   response: Record<string, unknown>;
   created_at: string;
-  updated_at: string;
-  website?: { name: string };
-  patient?: { name: string; email: string };
-  component?: { name: string; type: string };
+  updated_at?: string;
+  website?: { id?: string; name: string };
+  patient?: { id?: string; name: string; email: string };
+  component?: { id?: string; name: string; type: string };
 }
 
 // ─── API ──────────────────────────────────────────────────────────────────────
@@ -119,11 +85,9 @@ export interface ApiError {
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 export interface DashboardStats {
-  total_clients: number;
-  total_components: number;
-  total_themes: number;
-  total_form_responses: number;
-  recent_clients?: Client[];
+  total_websites: number;
+  total_responses: number;
+  recent_websites?: Website[];
   recent_responses?: FormResponse[];
 }
 
@@ -131,6 +95,6 @@ export interface DashboardStats {
 export interface NavItem {
   label: string;
   href: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string, style?: React.CSSProperties }>;
   badge?: number;
 }
