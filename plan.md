@@ -61,7 +61,52 @@ Role yang ada di project ini adalah
 
 ## Flow 
 seorang admin mendaftarkan client untuk bisa mengakses fitur-fitur yang nantinya berada di folder client. jika akun client sudah aktif maka client bisa mendaftarkan akun - akun yang bisa mengakses fitur-fitur di folder client. 
-Fitur - fiturnya yaitu `website`, jadi nantinya client untuk sekarang hanya bisa membuat satu website. dimana satu website memiliki beragam pilihan `component` seperti `patient_form` , `intake_form` , `consent_form` , `vital_sign_form` , `referral_form` , `history_form` , `medical_hx_form` , `surgical_hx_form` , `family_hx_form` , `social_hx_form` , `medication_hx_form` , `allergy_hx_form` , `review_of_system_form` , `lifestyle_form` , `nutrition_form` , `exercise_form` , `stress_management_form` , `sleep_hx_form` , `smoking_hx_form` , `alcohol_hx_form` , `substance_hx_form` , `mental_health_hx_form` , `sexual_health_hx_form` , `reproductive_health_hx_form` , `travel_hx_form` , `vaccination_hx_form` , `screening_form`, dan lain - lain. Selain component form builder juga nanti ada pilihan layanan telemedicine dimana seorang patient bisa berkomunikasi langsung dengan doctor. Tentunya semua fitur - fitur yang tersedia dibawah regulasi HIPAA compliance 1996 regulation act
+Fitur - fiturnya yaitu `website`, jadi nantinya client untuk sekarang hanya bisa membuat satu website. dimana satu website memiliki beragam pilihan `component` seperti `patient_form` , `intake_form` , `consent_form` , `vital_sign_form` , `referral_form` , `history_form` , `medical_hx_form` , `surgical_hx_form` , `family_hx_form` , `social_hx_form` , `medication_hx_form` , `allergy_hx_form` , `review_of_system_form` , `lifestyle_form` , `nutrition_form` , `exercise_form` , `stress_management_form` , `sleep_hx_form` , `smoking_hx_form` , `alcohol_hx_form` , `substance_hx_form` , `mental_health_hx_form` , `sexual_health_hx_form` , `reproductive_health_hx_form` , `travel_hx_form` , `vaccination_hx_form` , `screening_form`, dan lain - lain. 
+
+demikian detail component form builder yang harus ada : 
+
+Kategori 1: Pendaftaran & Administrasi Dasar
+
+1. Form Pasien Baru (New Patient):[Nama Lengkap]* [Tanggal Lahir]* [NIK/No. KTP]* [Alamat Domisili] [No. HP]
+2. Form Informasi Asuransi (Insurance):[Pilih Provider Asuransi ▾] [Nomor Kartu/Polis] [Unggah Foto Kartu Asuransi (Depan/Belakang)]
+3. Form Kontak Darurat (Emergency Contact):[Nama Kontak Darurat] [Hubungan (Orang Tua/Pasangan/Anak) ▾] [No. HP Darurat]
+4. Form Kebijakan Finansial (Billing Policy):[Text: Penjelasan biaya & denda pembatalan <24 jam] [ ] Saya setuju dengan kebijakan pembayaran*
+5. Form Rujukan (Patient Referral):[Nama Dokter Perujuk] [Nama Instansi/Klinik Asal] [Unggah Dokumen Surat Rujukan (.pdf/.jpg)]
+
+Kategori 2: Riwayat Medis & Klinis Umum
+
+6. Form Riwayat Kesehatan Umum (Medical History):Apakah Anda memiliki riwayat: [ ] Diabetes [ ] Hipertensi [ ] Jantung [ ] Asma [ ] Lainnya
+7. Form Riwayat Keluarga (Family History):Penyakit turunan di keluarga: [ ] Kanker [ ] Stroke [ ] Gangguan Darah Hubungan: [.....]
+8. Form Rekonsiliasi Obat (Current Medications):[Nama Obat/Suplemen 1] [Dosis: ... mg] [Frekuensi: ... x sehari] (+ Tambah Obat Lain)
+9. Form Pencatatan Alergi (Allergy Intake):Alergi Obat: [ Tulis di sini ] Alergi Makanan/Lainnya: [ Tulis di sini ] Reaksi: [ Rash / Sesak / dll ]
+10. Form Riwayat Sosial (Social History):Merokok: [ ] Ya [ ] Tidak Alkohol: [ ] Jarang [ ] Sering [ ] Tidak Pernah Pekerjaan: [.....]
+11. Form Keluhan Utama (Chief Complaint):Keluhan yang dirasakan saat ini: [ Area Teks Luas ] Skala Nyeri (1-10): [ Pilihan Angka ▾ ]
+
+Kategori 3: Persetujuan & Hukum (Legalitas)
+
+12. Form Privasi Data (Sesuai SATUSEHAT/HIPAA):[Text: Pernyataan kerahasiaan data medis] Tanda tangan digital pasien: [ Kolom Coretan TTD ]
+13. Form Persetujuan Tindakan (Informed Consent):Prosedur: [Perawatan X] [ ] Saya telah dijelaskan risiko tindakan dan menyetujuinya*
+14. Form Pelepasan Informasi (Release of Information):Izinkan rekam medis dikirim ke: [Nama Rumah Sakit Tujuan] Tujuan: [Rujukan / Klaim]
+15. Form Arahan Medis (Advance Directives):Jika kondisi darurat/kritis, tindakan resusitasi (RJP): [ ] Lakukan [ ] Jangan Lakukan (DNR)
+
+Kategori 4: Spesialisasi Khusus (Specialty-Specific)
+
+16. Form Intake Kesehatan Mental (Mental Health):Dalam 2 minggu terakhir, seberapa sering merasa cemas? [ ] Tidak pernah [ ] Beberapa hari [ ] Tiap hari
+17. Form Intake Pediatri (Anak):[Nama Orang Tua/Wali] Riwayat Tumbuh Kembang: [ Normal / Terlambat ] Riwayat Imunisasi: [ ] Lengkap
+18. Form Kesehatan Wanita (Obgyn):[Hari Pertama Haid Terakhir (HPHT)] Jumlah Kehamilan (G): [ ] Jumlah Persalinan (P): [ ]
+19. Form Intake Gigi (Dental Intake):Keluhan Gigi: [ ] Gusi Berdarah [ ] Gigi Sensitif Kapan terakhir kali ke dokter gigi? [.....]
+20. Form Fisioterapi / Kiropraktik:[Gambar Anatomi Tubuh untuk diklik/ditandai pasien bagian mana yang sakit] Jenis Nyeri: [ ] Tumpul [ ] Tajam
+21. Form Konsultasi Nutrisi (Ahli Gizi):Berat Badan: [... kg] Tinggi Badan: [... cm] Target Utama: [ ] Turun BB [ ] Naik BB [ ] Manajemen Penyakit22. Form Skincare & Estetika:Tipe Kulit: [ ] Berminyak [ ] Kering [ ] Sensitif Produk aktif yang dipakai: [Retinol/AHA/BHA/Tidak ada]
+
+Kategori 5: Operasional Tambahan & Evaluasi
+
+23. Form Skrining Penyakit Menular:Apakah mengalami demam/batuk dalam 3 hari terakhir? [ ] Ya [ ] Tidak Riwayat kontak erat: [ ] Ya [ ] Tidak
+24. Form Intake Telemedisin (Telehealth):[ ] Saya setuju melakukan konsultasi jarak jauh via video call dan memahami batasannya*
+25. Form Survei Kepuasan (Patient Satisfaction):Bagaimana pelayanan dokter/perawat hari ini? ⭐ ⭐ ⭐ ⭐ ⭐ (Sistem Rating Bintang)
+26. Form Daftar Tunggu (Waitlist):Hari/Jam Alternatif yang diinginkan: [ Pilihan Hari ] Hubungi saya jika ada jadwal kosong via: [ ] WhatsApp [ ] Email
+27. Form Klaim Pengembalian Dana (Refund):Nomor Invoice: [.....] Alasan Refund: [.....] Detail Rekening Bank (Nama Bank, No Rekening, Nama Pemilik): [.....]
+
+Selain component form builder juga nanti ada pilihan layanan telemedicine dimana seorang patient bisa berkomunikasi langsung dengan doctor. Tentunya semua fitur - fitur yang tersedia dibawah regulasi HIPAA compliance 1996 regulation act
 
 Jika client sudah membuat website maka client bisa membuat website tersebut bisa diakses oleh `patient`, pasien bisa mengakses website tersebut dengan menggunakan unique link yang diberikan oleh client,  lalu mengisi form - form yang tersedia. untuk hasil response nya akan bisa diakses oleh client dan doctor. jika patient memilih telemedicine maka patient akan masuk ke halaman telemedicine dimana halaman tersebut akan ada pilihan doctor yang tersedia. 
 
