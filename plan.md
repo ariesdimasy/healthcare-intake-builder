@@ -63,7 +63,9 @@ Role yang ada di project ini adalah
 seorang admin mendaftarkan client untuk bisa mengakses fitur-fitur yang nantinya berada di folder client. jika akun client sudah aktif maka client bisa mendaftarkan akun - akun yang bisa mengakses fitur-fitur di folder client. 
 Fitur - fiturnya yaitu `website`, jadi nantinya client untuk sekarang hanya bisa membuat satu website. dimana satu website memiliki beragam pilihan `component` seperti `patient_form` , `intake_form` , `consent_form` , `vital_sign_form` , `referral_form` , `history_form` , `medical_hx_form` , `surgical_hx_form` , `family_hx_form` , `social_hx_form` , `medication_hx_form` , `allergy_hx_form` , `review_of_system_form` , `lifestyle_form` , `nutrition_form` , `exercise_form` , `stress_management_form` , `sleep_hx_form` , `smoking_hx_form` , `alcohol_hx_form` , `substance_hx_form` , `mental_health_hx_form` , `sexual_health_hx_form` , `reproductive_health_hx_form` , `travel_hx_form` , `vaccination_hx_form` , `screening_form`, dan lain - lain. 
 
-demikian detail component form builder yang harus ada : 
+demikian detail component form builder yang harus ada :
+
+### 27 Form Intake Builder
 
 Kategori 1: Pendaftaran & Administrasi Dasar
 
@@ -96,7 +98,8 @@ Kategori 4: Spesialisasi Khusus (Specialty-Specific)
 18. Form Kesehatan Wanita (Obgyn):[Hari Pertama Haid Terakhir (HPHT)] Jumlah Kehamilan (G): [ ] Jumlah Persalinan (P): [ ]
 19. Form Intake Gigi (Dental Intake):Keluhan Gigi: [ ] Gusi Berdarah [ ] Gigi Sensitif Kapan terakhir kali ke dokter gigi? [.....]
 20. Form Fisioterapi / Kiropraktik:[Gambar Anatomi Tubuh untuk diklik/ditandai pasien bagian mana yang sakit] Jenis Nyeri: [ ] Tumpul [ ] Tajam
-21. Form Konsultasi Nutrisi (Ahli Gizi):Berat Badan: [... kg] Tinggi Badan: [... cm] Target Utama: [ ] Turun BB [ ] Naik BB [ ] Manajemen Penyakit22. Form Skincare & Estetika:Tipe Kulit: [ ] Berminyak [ ] Kering [ ] Sensitif Produk aktif yang dipakai: [Retinol/AHA/BHA/Tidak ada]
+21. Form Konsultasi Nutrisi (Ahli Gizi):Berat Badan: [... kg] Tinggi Badan: [... cm] Target Utama: [ ] Turun BB [ ] Naik BB [ ] Manajemen Penyakit
+22. Form Skincare & Estetika:Tipe Kulit: [ ] Berminyak [ ] Kering [ ] Sensitif Produk aktif yang dipakai: [Retinol/AHA/BHA/Tidak ada]
 
 Kategori 5: Operasional Tambahan & Evaluasi
 
@@ -105,6 +108,44 @@ Kategori 5: Operasional Tambahan & Evaluasi
 25. Form Survei Kepuasan (Patient Satisfaction):Bagaimana pelayanan dokter/perawat hari ini? ⭐ ⭐ ⭐ ⭐ ⭐ (Sistem Rating Bintang)
 26. Form Daftar Tunggu (Waitlist):Hari/Jam Alternatif yang diinginkan: [ Pilihan Hari ] Hubungi saya jika ada jadwal kosong via: [ ] WhatsApp [ ] Email
 27. Form Klaim Pengembalian Dana (Refund):Nomor Invoice: [.....] Alasan Refund: [.....] Detail Rekening Bank (Nama Bank, No Rekening, Nama Pemilik): [.....]
+
+### Logika Form Intake Builder
+
+Berikut adalah pemetaan keterkaitan (logika bersyarat) yang paling ideal dari 27 form yang Anda susun:
+
+**1. Keterkaitan Berdasarkan Data Demografi Dasar**
+Form ini saling terhubung berdasarkan input awal di **Form Pasien Baru**.
+- **Trigger usia:** 
+JIKA [Tanggal Lahir] menunjukkan pasien berusia < 18 tahun (atau sesuai kebijakan klinik) → MAKA muncul **Form Intake Pediatri (Anak)**.  
+Jika dewasa, form ini disembunyikan.
+- **Trigger jenis kelamin:** 
+JIKA [Jenis Kelamin] (biasanya ditambahkan di Form Pasien Baru) adalah Wanita →MAKA muncul **Form Kesehatan Wanita (Obgyn)**.
+
+**2. Keterkaitan Berdasarkan Administrasi & Jalur Kedatangan**
+Form ini muncul tergantung dari bagaimana cara pasien mendaftar dan membayar.
+- **Trigger asuransi:** JIKA pada pendaftaran ditanya "Metode Pembayaran: [Asuransi]" → MAKA muncul **Form Informasi Asuransi**. Jika memilih pasien umum/mandiri (*self-pay*), form ini diabaikan.
+- **Trigger rujukan:** JIKA pada pendaftaran ditanya "Apakah Anda pasien rujukan? [Ya]" → MAKA muncul **Form Rujukan**.
+- **Trigger telemedisin:** JIKA pasien mendaftar untuk layanan konsultasi online →MAKA muncul **Form Intake Telemedisin (Telehealth)** dan **Form Kebijakan Finansial** (untuk pembayaran di muka).
+
+**3. Keterkaitan Berdasarkan Keluhan Utama (Triage)**
+Jawaban pada **Form Keluhan Utama** atau pilihan Poliklinik saat pendaftaran akan memicu Kategori 4 (Spesialisasi Khusus).
+- JIKA Poli/Keluhan = "Gigi/Mulut" → MAKA muncul **Form Intake Gigi**.
+- JIKA Poli/Keluhan = "Otot/Sendi/Nyeri Punggung" → MAKA muncul **Form Fisioterapi / Kiropraktik**.
+- JIKA Poli/Keluhan = "Kecemasan/Depresi/Psikologis" → MAKA muncul **Form Intake Kesehatan Mental**.
+- JIKA Poli/Keluhan = "Diet/Berat Badan" → MAKA muncul **Form Konsultasi Nutrisi (Ahli Gizi)**.
+- JIKA Poli/Keluhan = "Jerawat/Perawatan Wajah" → MAKA muncul **Form Skincare & Estetika**.
+****
+
+**4. Keterkaitan Internal dalam Riwayat Medis (*Drill-Down*)**
+Ini adalah contoh di mana satu bagian dari sebuah form memicu pertanyaan lanjutan.
+- **Trigger Penyakit Tambahan:** Pada **Form Riwayat Kesehatan Umum**, JIKA pasien menceklis kotak "[ ] Lainnya" →MAKA muncul kotak teks (Text Box) wajib isi untuk menjelaskan penyakit tersebut.
+- **Trigger Alergi:** Pada **Form Pencatatan Alergi**, JIKA pasien mengisi nama obat/makanan →MAKA *dropdown* "Reaksi" (Rash/Sesak/dll) otomatis wajib diisi (*required*).
+
+**5. Keterkaitan Dokumen Legal & Situasional (Hukum)**
+
+Form di Kategori 3 biasanya dipicu oleh tindakan atau permintaan spesifik, bukan diisi di awal oleh semua orang.
+- **Trigger Tindakan Medis:** JIKA dokter memutuskan pasien harus menjalani operasi kecil atau perawatan khusus →MAKA petugas memicu pengiriman **Form Persetujuan Tindakan (Informed Consent)** ke perangkat/HP pasien.
+- **Trigger Transfer Data:** JIKA pasien meminta dirujuk keluar atau mengklaim asuransi pribadi →MAKA muncul **Form Pelepasan Informasi (Release of Information)**.
 
 Selain component form builder juga nanti ada pilihan layanan telemedicine dimana seorang patient bisa berkomunikasi langsung dengan doctor. Tentunya semua fitur - fitur yang tersedia dibawah regulasi HIPAA compliance 1996 regulation act
 

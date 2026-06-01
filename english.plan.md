@@ -26,8 +26,9 @@ In this project, I want to build a healthcare intake builder with 3 main folders
       - Edit Form Response
       - Delete Form Response
       - View Form Response Details
+  6. Authentication — login page only, no registration page
 
-- **backend** — the area for handling the core logic of the healthcare intake builder. This is a backend project. REST API project.
+- **backend** — the area for handling the core logic of the healthcare intake builder. This is a backend project.
 
 - **client** — the area where users with the client role can build a website for intake forms, allowing patients to fill out those forms and send data back to the client. This is a frontend project. The layout also follows a typical admin dashboard pattern using sidebar + header + main content. However, there is one menu where the user can drag and drop components to build forms into a website page. The available components are described in the Flow section.
   Features in this folder:
@@ -49,6 +50,7 @@ In this project, I want to build a healthcare intake builder with 3 main folders
       - Edit Form Response
       - Delete Form Response
       - View Form Response Details
+  7. Authentication — login page only, no registration page
 
 ## Roles
 The roles in this project are:
@@ -65,6 +67,83 @@ An admin registers a client so they can access the features available in the cli
 
 The features include a `website` — for now, a client can only create one website. A website can contain various `components` such as:
 `patient_form`, `intake_form`, `consent_form`, `vital_sign_form`, `referral_form`, `history_form`, `medical_hx_form`, `surgical_hx_form`, `family_hx_form`, `social_hx_form`, `medication_hx_form`, `allergy_hx_form`, `review_of_system_form`, `lifestyle_form`, `nutrition_form`, `exercise_form`, `stress_management_form`, `sleep_hx_form`, `smoking_hx_form`, `alcohol_hx_form`, `substance_hx_form`, `mental_health_hx_form`, `sexual_health_hx_form`, `reproductive_health_hx_form`, `travel_hx_form`, `vaccination_hx_form`, `screening_form`, and more.
+
+Here are the detailed form builder components that must be available:
+
+### 27 Form Intake Builder
+
+### Category 1: Registration & Basic Administration
+1. **New Patient Form**: [Full Name]* [Date of Birth]* [National ID Number (NIK/KTP)]* [Home Address] [Phone Number]
+2. **Insurance Information Form**: [Select Insurance Provider ▾] [Card/Policy Number] [Upload Insurance Card Photo (Front/Back)]
+3. **Emergency Contact Form**: [Emergency Contact Name] [Relationship (Parent/Spouse/Child) ▾] [Emergency Phone Number]
+4. **Billing Policy Form**: [Text: Explanation of fees & cancellation penalties < 24 hours] [ ] I agree to the payment policy*
+5. **Patient Referral Form**: [Referring Doctor's Name] [Originating Institution/Clinic Name] [Upload Referral Letter Document (.pdf/.jpg)]
+
+### Category 2: Medical & General Clinical History
+6. **General Medical History Form**: Do you have a history of: [ ] Diabetes [ ] Hypertension [ ] Heart Disease [ ] Asthma [ ] Other
+7. **Family History Form**: Hereditary diseases in the family: [ ] Cancer [ ] Stroke [ ] Blood Disorders — Relationship: [.....]
+8. **Current Medications Form (Medication Reconciliation)**: [Medication/Supplement Name 1] [Dose: ... mg] [Frequency: ... times/day] (+ Add Another Medication)
+9. **Allergy Intake Form**: Drug Allergies: [ Write here ] Food/Other Allergies: [ Write here ] Reaction: [ Rash / Shortness of Breath / etc. ]
+10. **Social History Form**: Smoking: [ ] Yes [ ] No — Alcohol: [ ] Rarely [ ] Often [ ] Never — Occupation: [.....]
+11. **Chief Complaint Form**: Current complaint: [ Large Text Area ] Pain Scale (1–10): [ Number Selection ▾ ]
+
+### Category 3: Consent & Legal (Legality)
+12. **Data Privacy Form (SATUSEHAT/HIPAA Compliant)**: [Text: Medical data confidentiality statement] — Patient digital signature: [ Signature Pad ]
+13. **Informed Consent Form**: Procedure: [Treatment X] [ ] I have been informed of the risks and I consent*
+14. **Release of Information Form**: Allow medical records to be sent to: [Destination Hospital Name] — Purpose: [Referral / Insurance Claim]
+15. **Advance Directives Form**: In case of emergency/critical condition, resuscitation (CPR): [ ] Perform [ ] Do Not Perform (DNR)
+
+### Category 4: Specialty-Specific
+16. **Mental Health Intake Form**: In the past 2 weeks, how often have you felt anxious? [ ] Never [ ] Some days [ ] Every day
+17. **Pediatric Intake Form**: [Parent/Guardian Name] — Development History: [ Normal / Delayed ] — Immunization History: [ ] Complete
+18. **Women's Health Form (OB/GYN)**: [First Day of Last Menstrual Period (LMP)] — Number of Pregnancies (G): [ ] — Number of Deliveries (P): [ ]
+19. **Dental Intake Form**: Dental Complaint: [ ] Bleeding Gums [ ] Sensitive Teeth — When was your last dentist visit? [.....]
+20. **Physiotherapy / Chiropractic Form**: [Body Anatomy Diagram for patient to click/mark the painful area] — Type of Pain: [ ] Dull [ ] Sharp
+21. **Nutrition Consultation Form**: Weight: [... kg] Height: [... cm] Primary Goal: [ ] Lose Weight [ ] Gain Weight [ ] Disease Management
+22. **Skincare & Aesthetics Form**: Skin Type: [ ] Oily [ ] Dry [ ] Sensitive — Active products in use: [Retinol / AHA / BHA / None]
+
+### Category 5: Additional Operations & Evaluation
+23. **Infectious Disease Screening Form**: Have you had fever/cough in the past 3 days? [ ] Yes [ ] No — History of close contact: [ ] Yes [ ] No
+24. **Telehealth Intake Form**: [ ] I agree to conduct a remote consultation via video call and understand its limitations*
+25. **Patient Satisfaction Survey**: How was the doctor/nurse service today? ⭐ ⭐ ⭐ ⭐ ⭐ (Star Rating System)
+26. **Waitlist Form**: Preferred Alternative Day/Time: [ Day Selection ] Contact me if a slot opens via: [ ] WhatsApp [ ] Email
+27. **Refund Claim Form**: Invoice Number: [.....] — Reason for Refund: [.....] — Bank Account Details (Bank Name, Account Number, Account Holder Name): [.....]
+
+### Form Intake Builder Logic
+
+Below is the ideal conditional relationship mapping (conditional logic) for the 27 forms:
+
+**1. Relationships Based on Basic Demographic Data**
+These forms are interconnected based on initial input from the **New Patient Form**.
+- **Age trigger:**
+  IF [Date of Birth] indicates the patient is under 18 years old (or per clinic policy) → THEN the **Pediatric Intake Form** appears.
+  If the patient is an adult, this form is hidden.
+- **Gender trigger:**
+  IF [Gender] (typically added to the New Patient Form) is Female → THEN the **Women's Health Form (OB/GYN)** appears.
+
+**2. Relationships Based on Administration & Arrival Pathway**
+These forms appear depending on how the patient registers and pays.
+- **Insurance trigger:** IF the registration asks "Payment Method: [Insurance]" → THEN the **Insurance Information Form** appears. If the patient selects self-pay, this form is skipped.
+- **Referral trigger:** IF the registration asks "Are you a referred patient? [Yes]" → THEN the **Patient Referral Form** appears.
+- **Telemedicine trigger:** IF the patient registers for an online consultation service → THEN the **Telehealth Intake Form** and the **Billing Policy Form** (for upfront payment) appear.
+
+**3. Relationships Based on Chief Complaint (Triage)**
+Answers on the **Chief Complaint Form** or the selected Polyclinic at registration will trigger Category 4 (Specialty-Specific).
+- IF Polyclinic/Complaint = "Dental/Oral" → THEN the **Dental Intake Form** appears.
+- IF Polyclinic/Complaint = "Muscle/Joint/Back Pain" → THEN the **Physiotherapy / Chiropractic Form** appears.
+- IF Polyclinic/Complaint = "Anxiety/Depression/Psychological" → THEN the **Mental Health Intake Form** appears.
+- IF Polyclinic/Complaint = "Diet/Weight" → THEN the **Nutrition Consultation Form** appears.
+- IF Polyclinic/Complaint = "Acne/Facial Care" → THEN the **Skincare & Aesthetics Form** appears.
+
+**4. Internal Relationships within Medical History (Drill-Down)**
+This is where one section within a form triggers a follow-up question.
+- **Additional Disease trigger:** On the **General Medical History Form**, IF the patient checks "[ ] Other" → THEN a mandatory text box appears for the patient to describe the condition.
+- **Allergy trigger:** On the **Allergy Intake Form**, IF the patient enters a medication/food name → THEN the "Reaction" dropdown (Rash / Shortness of Breath / etc.) automatically becomes required.
+
+**5. Legal & Situational Document Relationships**
+Forms in Category 3 are typically triggered by a specific action or request, not filled out upfront by all patients.
+- **Medical Procedure trigger:** IF a doctor decides the patient needs minor surgery or a special treatment → THEN staff triggers the **Informed Consent Form** to be sent to the patient's device/phone.
+- **Data Transfer trigger:** IF the patient requests an external referral or is claiming personal insurance → THEN the **Release of Information Form** appears.
 
 In addition to the form builder components, there will also be a telemedicine service option where a patient can communicate directly with a doctor. All available features will be built under **HIPAA Compliance 1996 Regulation Act**.
 

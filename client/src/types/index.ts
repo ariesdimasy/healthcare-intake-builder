@@ -98,3 +98,51 @@ export interface NavItem {
   icon: React.ComponentType<{ className?: string, style?: React.CSSProperties }>;
   badge?: number;
 }
+
+// ─── Website Builder Wizard ───────────────────────────────────────────────────
+export interface WebsiteInfo {
+  title: string;
+  meta_content: string;
+  meta_description: string;
+  logo: File | null;
+  logoPreview: string | null;
+}
+
+export interface WebsiteSettings {
+  username_github: string;
+  db_host: string;
+  db_username: string;
+  db_name: string;
+  db_password: string;
+}
+
+export type FormCategory =
+  | "Registration & Administration"
+  | "Medical & Clinical History"
+  | "Consent & Legal"
+  | "Specialty-Specific"
+  | "Operations & Evaluation";
+
+export interface IntakeFormItem {
+  id: string;
+  name: string;
+  label: string;
+  category: FormCategory;
+  icon: string;
+  description: string;
+}
+
+export interface DroppedForm {
+  uid: string;
+  formId: string;
+  label: string;
+  title_text: string;
+  description_text: string;
+}
+
+export interface WizardState {
+  step: 1 | 2 | 3 | 4;
+  websiteInfo: WebsiteInfo;
+  websiteSettings: WebsiteSettings;
+  droppedForms: DroppedForm[];
+}
