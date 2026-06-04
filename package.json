@@ -1,0 +1,29 @@
+{
+  "name": "healthcare-intake-builder",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/admin",
+    "apps/client",
+    "apps/backend"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:admin": "turbo run dev --filter=@healthcare/admin",
+    "dev:client": "turbo run dev --filter=@healthcare/client",
+    "dev:backend": "turbo run dev --filter=@healthcare/backend",
+    "build": "turbo run build",
+    "build:admin": "turbo run build --filter=@healthcare/admin",
+    "build:client": "turbo run build --filter=@healthcare/client",
+    "lint": "turbo run lint",
+    "lint:admin": "turbo run lint --filter=@healthcare/admin",
+    "lint:client": "turbo run lint --filter=@healthcare/client"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "npm@10.0.0"
+}
