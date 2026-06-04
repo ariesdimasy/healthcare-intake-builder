@@ -60,14 +60,6 @@ export default function Step4PreviewExport({
               <span className="preview-meta-value">@{websiteSettings.username_github || "—"}</span>
             </div>
             <div className="preview-meta-item">
-              <span className="preview-meta-label">DB Host</span>
-              <span className="preview-meta-value">{websiteSettings.db_host || "—"}</span>
-            </div>
-            <div className="preview-meta-item">
-              <span className="preview-meta-label">Database</span>
-              <span className="preview-meta-value">{websiteSettings.db_name || "—"}</span>
-            </div>
-            <div className="preview-meta-item">
               <span className="preview-meta-label">Forms</span>
               <span className="preview-meta-value">{droppedForms.map((f) => f.label).join(", ")}</span>
             </div>

@@ -18,10 +18,6 @@ const defaultInfo: WebsiteInfo = {
 
 const defaultSettings: WebsiteSettings = {
   username_github: "",
-  db_host: "",
-  db_username: "",
-  db_name: "",
-  db_password: "",
 };
 
 export default function CreateWebsitePage() {

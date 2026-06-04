@@ -110,10 +110,6 @@ export interface WebsiteInfo {
 
 export interface WebsiteSettings {
   username_github: string;
-  db_host: string;
-  db_username: string;
-  db_name: string;
-  db_password: string;
 }
 
 export type FormCategory =
